@@ -277,7 +277,9 @@ def callback_google():
     try:
         token = oauth.google.authorize_access_token()
     except Exception as e:
-        flash(f'An error occurred during Google authentication. Please try again.', 'danger')
+        import traceback
+        app.logger.error(f'Google OAuth error: {e}\n{traceback.format_exc()}')
+        flash(f'Google authentication error: {e}', 'danger')
         return redirect(url_for('login'))
 
     user_info = token.get('userinfo')
