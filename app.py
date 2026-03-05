@@ -23,7 +23,12 @@ app = Flask(__name__)
 # and load it from an environment variable.
 # Use a fixed key for dev so sessions don't expire on server restart
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or 'dev-secret-key-fixed-for-stability'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+# Use DATABASE_URL env var for cloud databases (Neon, Supabase, etc.)
+# Fall back to local SQLite for development.
+_db_url = os.environ.get('DATABASE_URL', 'sqlite:///users.db')
+if _db_url.startswith('postgres://'):
+    _db_url = _db_url.replace('postgres://', 'postgresql://', 1)
+app.config['SQLALCHEMY_DATABASE_URI'] = _db_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Set a permanent session lifetime for auto-logout
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=15)
@@ -43,6 +48,12 @@ app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', '')
 
 # --- Initializations ---
 init_auth(app)
+
+# Create tables at import time so Vercel serverless functions work without
+# needing to run the app via __main__.
+with app.app_context():
+    db.create_all()
+
 csrf = CSRFProtect(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
