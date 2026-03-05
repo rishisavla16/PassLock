@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}User Database{% endblock %}
+
+{% block header_user_info %}
+    <a href="{{ url_for('vault_page') }}" class="button-nav">Back to Vault</a>
+    <a href="{{ url_for('logout') }}" class="button-logout">Logout</a>
+{% endblock %}
+
+{% block content %}
+    <main>
+        <h2>User Database</h2>
+        <p>Total Registered Users: <strong>{{ users|length }}</strong></p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Login Method</th>
+                    <th>Vault Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td data-label="ID">{{ user.id }}</td>
+                    <td data-label="Email">{{ user.email }}</td>
+                    <td data-label="Login Method">
+                        {% if user.google_id %}Google{% endif %}
+                        {% if user.google_id and user.password_hash %} + {% endif %}
+                        {% if user.password_hash %}Password{% endif %}
+                    </td>
+                    <td data-label="Vault Status">
+                        {% if user.encrypted_vault %}Initialized{% else %}Empty{% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+{% endblock %}

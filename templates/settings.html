@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}Settings - Secure PM{% endblock %}
+
+{% block header_user_info %}
+    <a href="{{ url_for('vault_page') }}" class="button-nav">Back to Vault</a>
+    <a href="{{ url_for('logout') }}" class="button-logout">Logout</a>
+{% endblock %}
+
+{% block content %}
+    <main>
+        <div id="settings-content">
+            <h2>Account Settings | {{ current_user.email}}</h2>
+
+            <!-- Hint Setting -->
+            <div class="setting-card accordion-card">
+                <button class="accordion">Add/Edit Master Password Hint <span class="icon">▼</span></button>
+                <div class="panel">
+                    <p>Set a hint to help you remember your master password. Do not make it too obvious!</p>
+                    <form id="hint-form" class="settings-form">
+                        <label for="update-hint-input" class="sr-only">Master Password Hint</label>
+                        <input type="text" id="update-hint-input" placeholder="Enter your hint" value="{{ password_hint or '' }}">
+                        <button class="settings-btn" type="submit">Save Hint</button>
+                        <span id="hint-save-status" class="save-status"></span>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Change Password Setting -->
+            <div class="setting-card accordion-card">
+                <button class="accordion">Change Master Password <span class="icon">▼</span></button>
+                <div class="panel">
+                    <p>If you change your master password, your entire vault will be re-encrypted. This cannot be undone.</p>
+                    <form id="change-password-form">
+                        <div class="form-group">
+                            <input type="password" id="old-master-password" placeholder="Enter your old password" required autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="new-master-password" placeholder="Enter a new password" required autocomplete="new-password">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="confirm-new-password" placeholder="Confirm new password" required autocomplete="new-password">
+                        </div>
+                        <button class="settings-btn" type="submit">Change Password</button>
+                        <span id="change-password-status" class="save-status"></span>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Change Login Password Setting -->
+            <div class="setting-card accordion-card">
+                <button class="accordion">Change Login Password <span class="icon">▼</span></button>
+                <div class="panel">
+                    <p>Update the password used to log in to your account manually.</p>
+                    <form id="change-login-password-form">
+                        <div class="form-group">
+                            <input type="password" id="new-login-password" placeholder="New Login Password" required>
+                        </div>
+                        <button class="settings-btn" type="submit">Update Password</button>
+                        <span id="login-password-status" class="save-status"></span>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Two-Factor Authentication Setting -->
+            <div class="setting-card accordion-card">
+                <button class="accordion">Two-Factor Authentication <span class="icon">▼</span></button>
+                <div class="panel">
+                    <div id="2fa-status-section">
+                        <p>Status: <strong id="2fa-status-text" style="color: {{ 'green' if current_user.totp_secret else 'var(--text-muted)' }};">{{ 'Enabled' if current_user.totp_secret else 'Disabled' }}</strong></p>
+                        {% if current_user.totp_secret %}
+                            <button id="disable-2fa-btn" class="settings-btn" style="background-color: var(--danger-color);">Disable 2FA</button>
+                        {% else %}
+                            <button id="enable-2fa-btn" class="settings-btn">Enable 2FA</button>
+                        {% endif %}
+                    </div>
+                    
+                    <div id="2fa-setup-section" class="hidden" style="margin-top: 1rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                        <p>A verification code has been sent to <strong>{{ current_user.email }}</strong>.</p>
+                        <p>Please enter the 6-digit code below to enable 2FA:</p>
+                        <form id="verify-2fa-form">
+                            <div class="form-group">
+                                <input type="text" id="verify-2fa-code" placeholder="000000" pattern="\d{6}" inputmode="numeric" autocomplete="one-time-code" required style="width: 150px; text-align: center; letter-spacing: 2px;">
+                            </div>
+                            <button class="settings-btn" type="submit">Verify & Enable</button>
+                            <button type="button" id="resend-2fa-btn" class="settings-btn" style="background-color: var(--text-muted); margin-left: 0.5rem;">Resend Code</button>
+                            <span id="2fa-msg" class="save-status"></span>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delete Account Setting -->
+            <div class="setting-card accordion-card">
+                <button class="accordion">Delete Account <span class="icon">▼</span></button>
+                <div class="panel">
+                    <p style="color: var(--danger-color);"><strong>Warning:</strong> This will permanently delete your account and all stored passwords. This action cannot be reversed.</p>
+                    <button class="settings-btn" id="delete-account-btn">Delete My Account</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Custom Confirmation Modal -->
+    <div id="confirmation-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 id="modal-title">Confirm Action</h3>
+            <p id="modal-message">Are you sure?</p>
+            <div class="modal-actions">
+                <button id="modal-confirm-btn" class="modal-btn-confirm">Confirm</button>
+                <button id="modal-cancel-btn" class="modal-btn-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extra_head %}
+    <!-- CSRF token for JS API calls -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='crypto.js') }}"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+{% endblock %}

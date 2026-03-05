@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Secure PM{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>PassLock</h1>
+            <div class="user-info">
+                <button id="theme-toggle" title="Toggle Theme" class="icon-btn">🌙</button>
+                {% block header_user_info %}{% endblock %}
+            </div>
+        </div>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <footer>
+        <p><strong>Security Disclaimer:</strong> Your Master Password is used for client-side encryption and is <strong>never</strong> sent to our servers. We cannot recover your account or data if you lose your password.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='theme.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

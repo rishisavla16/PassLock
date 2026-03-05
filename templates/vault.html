@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}My Vault{% endblock %}
+
+{% block extra_head %}
+    <!-- Security: A strong Content-Security-Policy is crucial to prevent XSS attacks,
+         which could compromise the client-side encryption. This is a basic example.
+         A real app would be more restrictive. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self';">
+    <!-- CSRF token for JS API calls -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+{% endblock %}
+
+{% block header_user_info %}
+    <a href="{{ url_for('settings_page') }}" id="settings-link" class="icon-btn hidden" title="Settings" style="margin-right: 0.5rem;">⚙️</a>
+    <a href="{{ url_for('logout') }}" class="button-logout">Logout</a>
+{% endblock %}
+
+{% block content %}
+    <main>
+        <!-- This section is shown to unlock the vault -->
+        <div id="unlock-vault-section">
+            <!-- Hidden flag for JS to know which mode we are in -->
+            <input type="hidden" id="is-setup-mode" value="{{ 'true' if not vault_exists else 'false' }}">
+
+            {% if not vault_exists %}
+                <h2>Setup Master Password</h2>
+                <p>Create a <strong>Master Password</strong> to secure your vault. You cannot recover this if lost.</p>
+            {% else %}
+                <h2>Unlock Your Vault</h2>
+                <p>Enter your <strong>Master Password</strong> to decrypt your vault. <br> <i>(This password is never sent to the server)</i></p>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="master-password">Master Password</label>
+                <input type="password" id="master-password" autocomplete="off">
+            </div>
+            {% if not vault_exists %}
+            <div class="form-group">
+                <label for="confirm-password">Confirm Master Password</label>
+                <input type="password" id="confirm-password" autocomplete="off">
+            </div>
+            {% endif %}
+            <div class="btngrp">
+                <div id="hint-wrapper" class="{% if not current_user.password_hint %}hidden{% endif %}">
+                    <button id="show-hint-btn" type="button">Show Hint</button>
+                    <p id="master-password-hint">Hint: {{ current_user.password_hint }}</p>
+                </div>
+            <div class="unlock">
+                <button id="unlock-button">{% if not vault_exists %}Set Master Password{% else %}Unlock{% endif %}</button>
+            </div>
+            </div>
+            <p id="unlock-error" class="error-message"></p>
+        </div>
+
+        <!-- This section is hidden until the vault is unlocked -->
+        <div id="vault-content-section">
+            <div class="vault-controls">
+                <h2>My Vault</h2>
+                <button id="lock-vault-button">Lock Vault</button>
+            </div>
+            
+            <div id="add-entry-section">
+                <button id="show-add-entry-btn">Add New Entry</button>
+                <div id="add-entry-form" class="hidden">
+                    <h3>Add New Entry</h3>
+                    <form id="new-entry-form">
+                        <div class="form-inputs">
+                            <input type="text" id="new-site" placeholder="Site (e.g., instagram)" required>
+                            <input type="text" id="new-username" placeholder="Username" required>
+                            <input type="text" id="new-password" placeholder="Password" required>
+                        </div>
+                        <div class="form-buttons">
+                            <button type="submit">Add Entry</button>
+                            <button type="button" id="cancel-entry-btn">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div id="vault-entries">
+                <h3>Your Entries</h3>
+                <table id="entries-table">
+                    <thead>
+                        <tr>
+                            <th>Site</th>
+                            <th>Username</th>
+                            <th>Password</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Entries will be populated by JavaScript -->
+                    </tbody>
+                </table>
+                <p id="empty-vault-message" class="hidden">Your vault is empty. Add an entry above.</p>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Custom Confirmation Modal -->
+    <div id="confirmation-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 id="modal-title">Confirm Action</h3>
+            <p id="modal-message">Are you sure?</p>
+            <div class="modal-actions">
+                <button id="modal-confirm-btn" class="modal-btn-confirm">Confirm</button>
+                <button id="modal-cancel-btn" class="modal-btn-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='crypto.js') }}"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+{% endblock %}

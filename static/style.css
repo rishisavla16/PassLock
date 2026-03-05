@@ -1,0 +1,797 @@
+/* secure_password_manager/static/style.css */
+
+:root {
+    /* Light Theme Variables */
+    --bg-color: #f3f4f6;
+    --card-bg: #ffffff;
+    --text-color: #1f2937;
+    --text-muted: #9ca3af;
+    --primary-color: #4f46e5;
+    --primary-hover: #4338ca;
+    --danger-color: #ef4444;
+    --danger-hover: #dc2626;
+    --border-color: #e5e7eb;
+    --input-bg: #ffffff;
+    --header-bg: #ffffff;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --radius: 0.5rem;
+}
+
+[data-theme="dark"] {
+    /* Dark Theme Variables */
+    --bg-color: #111827;
+    --card-bg: #1f2937;
+    --text-color: #f9fafb;
+    --text-muted: #6b7280;
+    --primary-color: #6366f1;
+    --primary-hover: #818cf8;
+    --danger-color: #f87171;
+    --danger-hover: #ef4444;
+    --border-color: #374151;
+    --input-bg: #374151;
+    --header-bg: #1f2937;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: var(--header-bg);
+    color: var(--text-color);
+    padding: 1rem 2rem;
+    box-shadow: var(--shadow-sm);
+    border-bottom: 1px solid var(--border-color);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-info span {
+    margin-right: 1rem;
+    color: var(--text-muted);
+}
+
+.button-logout {
+    color: #fff;
+    background-color: var(--danger-color);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: background-color 0.2s, transform 0.1s;
+    font-size: 0.9rem;
+}
+
+.button-logout:hover {
+    background-color: var(--danger-hover);
+    text-decoration: none;
+}
+
+.button-nav {
+    color: #fff;
+    background-color: var(--primary-color);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: background-color 0.2s, transform 0.1s;
+    font-size: 0.9rem;
+}
+
+.button-nav:hover {
+    background-color: var(--primary-hover);
+    text-decoration: none;
+}
+
+.button-logout[style*="background-color: var(--primary-color)"] {
+    background-color: var(--primary-color);
+}
+
+
+main, .form-container {
+    max-width: 900px;
+    width: 95%;
+    margin: 2rem auto;
+    padding: 2rem 4rem;
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color);
+}
+
+h2 {
+    color: var(--text-color);
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+    margin-top: 0;
+}
+
+h3 {
+    color: var(--text-color);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+input[type="text"], input[type="password"], input[type="email"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    border-radius: var(--radius);
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+#password-strength {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    background-color: var(--primary-hover);
+    transform: none;
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button:disabled {
+    background-color: var(--text-muted);
+    cursor: not-allowed;
+    transform: none;
+}
+
+.settings-btn{
+    margin-bottom: 1rem;
+}
+
+.flash {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: var(--radius);
+}
+.flash.success { background-color: #d4edda; color: #155724; }
+.flash.danger { background-color: #f8d7da; color: #721c24; }
+.flash.info { background-color: #d1ecf1; color: #0c5460; }
+
+.error-message {
+    color: var(--danger-color);
+    font-weight: bold;
+}
+
+.vault-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+#lock-vault-button {
+    background-color: #f59e0b; /* Amber */
+}
+#lock-vault-button:hover {
+    background-color: #d97706;
+}
+
+#add-entry-form {
+    background-color: var(--bg-color);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    margin-bottom: 2rem;
+    border: 1px solid var(--border-color);
+}
+
+#add-entry-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-inputs {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+}
+
+.form-inputs input {
+    flex: 1;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+#cancel-entry-btn {
+    background-color: var(--text-muted);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Prevents column width from changing on content change */
+    margin-top: 1rem;
+}
+
+th, td {
+    text-align: left;
+    padding: 0.8rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+/* Handle long text in cells with an ellipsis to maintain layout */
+table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Override for the actions cell to ensure all buttons are visible */
+table td.actions {
+    overflow: visible;
+}
+
+th {
+    background-color: var(--bg-color);
+    font-weight: 600;
+}
+
+/* Fixed column widths */
+th:nth-child(1) { width: 20%; }
+th:nth-child(2) { width: 20%; }
+th:nth-child(3) { width: 25%; }
+th:nth-child(4) { width: 35%; }
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+.actions .action-btn {
+    padding: 0.3rem 0;
+    font-size: 0.8rem;
+    margin-right: 0.3rem;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    width: 4rem;
+    text-align: center;
+}
+
+.actions .action-btn:hover {
+    background-color: var(--border-color);
+    transform: none;
+}
+
+.actions .delete-btn {
+    background-color: var(--danger-color);
+    color: white;
+    border: none;
+}
+.actions .delete-btn:hover {
+    background-color: var(--danger-hover);
+}
+
+/* Icon Buttons (Theme Toggle, Settings) */
+.icon-btn, .theme-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all 0.2s;
+    color: var(--text-color);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0rem;
+}
+
+.icon-btn:hover {
+    transform: rotate(30deg);
+    text-decoration: none;
+    background: none !important;
+}
+.theme-btn:hover {
+    text-decoration: none;
+    transform: translate(0);
+    transform: rotate(30deg);
+    background: none !important;
+}
+
+/* Links */
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* Initially hide the vault content */
+#vault-content-section {
+    display: none;
+}
+
+/* Password Visibility Toggling */
+.password-cell .password-revealed {
+    display: none;
+}
+
+.password-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.password-text {
+    cursor: pointer;
+    user-select: none;
+}
+
+.icon-copy-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0.2rem;
+    line-height: 1;
+    color: var(--text-color);
+    transition: transform 0.1s;
+}
+
+.icon-copy-btn:hover {
+    transform: scale(1.1);
+    background: none;
+}
+
+.password-text:hover .password-revealed {
+    display: inline;
+}
+
+.password-text:hover .password-hidden {
+    display: none;
+}
+
+.password-cell.revealed .password-revealed {
+    display: inline;
+}
+
+.password-cell.revealed .password-hidden {
+    display: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.btngrp {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+#master-password-hint {
+    display: none; /* Hidden by default */
+    font-style: italic;
+    margin-top: 5px;
+    font-size: 0.9em;
+}
+
+#master-password-hint.is-visible {
+    display: block; /* Made visible by JS */
+}
+
+#vault-settings {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.settings-form {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.save-status {
+    font-size: 0.9em;
+    font-style: italic;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.setting-card {
+    background-color: var(--bg-color);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    margin-top: 1.5rem;
+    border: 1px solid var(--border-color);
+}
+
+.accordion-card {
+    padding: 0;
+}
+
+.accordion {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 1.5rem;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: background-color 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accordion:hover, .accordion.active {
+    background-color: var(--bg-color);
+}
+
+.panel {
+    padding: 0 1.5rem;
+    background-color: var(--card-bg);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.icon {
+    font-weight: bold;
+    transition: transform 0.3s ease;
+    transform: rotate(-90deg); /* Point right when closed */
+}
+
+.accordion.active .icon {
+    transform: rotate(0deg); /* Point down when open */
+}
+
+.setting-card h4 {
+    margin-top: 0;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+#delete-account-btn {
+    background-color: var(--danger-color);
+}
+
+#delete-account-btn:hover {
+    background-color: var(--danger-hover);
+}
+
+.unlock {
+    margin-left: auto;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(2px);
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.modal-btn-confirm {
+    background-color: var(--danger-color);
+}
+
+.modal-btn-confirm:hover {
+    background-color: var(--danger-hover);
+}
+
+.modal-btn-cancel {
+    background-color: var(--text-muted);
+}
+
+/* Google Button */
+.google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s;
+    box-sizing: border-box;
+}
+
+.google-btn:hover {
+    background-color: var(--bg-color);
+    text-decoration: none;
+}
+
+.google-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Separator */
+.separator {
+    text-align: center;
+    margin: 1.5rem 0;
+    color: var(--text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: auto;
+    border-top: 1px solid var(--border-color);
+}
+
+/* --- Responsive Design --- */
+
+/* For tablets and smaller desktops */
+@media (max-width: 960px) {
+    header {
+        padding: 1rem 1.5rem;
+    }
+
+    main, .form-container {
+        padding: 2rem;
+        width: 90%;
+    }
+
+    .form-inputs {
+        flex-wrap: wrap;
+    }
+
+    .form-inputs input {
+        flex-basis: 100%;
+    }
+}
+
+/* For mobile phones */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+
+    header {
+        padding: 1rem;
+        width: 100%;
+    }
+
+    header h1 {
+        font-size: 1rem;
+        margin: 0;
+    }
+
+    h2 {
+        font-size: 0.9rem;
+    }
+
+    h3 {
+        font-size: 0.8rem;
+    }
+
+    p{
+        font-size: 0.7rem;
+    }
+
+    .accordion {
+        font-size: 0.8rem;
+        padding: 1rem;
+    }
+
+    /* Reduce button font size and padding on mobile */
+    button, .google-btn, .button-logout, .button-nav{
+        font-size: 0.7rem;
+        padding: 0.5rem;
+    }
+    button:hover, .google-btn:hover, .button-logout:hover, .button-nav:hover{
+        font-size: 0.7rem;
+        padding: 0.5rem;
+    }
+    
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    label {
+        font-size: 0.8rem;
+    }
+
+    .user-info span {
+        display: none; /* Hide "Welcome" text on small screens */
+    }
+
+    main, .form-container {
+        max-width: 100%;
+        padding: 1.5rem 1rem;
+        margin: 1rem auto;
+        border-radius: 0.5rem;
+    }
+
+    /* Transform table into a list of cards */
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    /* Hide table headers (they'll be shown in the data cells) */
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr {
+        border: 1px solid var(--border-color);
+        margin-bottom: 1rem;
+        border-radius: var(--radius);
+        padding: 0.5rem;
+    }
+
+    td {
+        /* Behave like a "row" */
+        font-size: 0.8rem;
+        border: none;
+        border-bottom: 1px solid var(--border-color);
+        position: relative;
+        padding: 0 1rem;
+        text-align: right;
+        white-space: normal; /* Allow wrapping */
+        overflow-wrap: break-word;
+        min-height: 2rem; /* Ensure cells have height */
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    td:before {
+        /* Now like a table header */
+        content: attr(data-label);
+        position: absolute;
+        left: 0.5rem;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        color: var(--text-color);
+    }
+
+    td:last-child {
+        border-bottom: 0;
+    }
+
+    td.actions {
+        display: flex;
+        gap: 0.5rem;
+        padding: 0.3rem 0.3rem 0rem 0.3rem;
+        justify-content: space-between;
+    }
+
+    td.actions:before {
+        display: none; /* No label needed for the action buttons row */
+    }
+
+    /* Reset fixed column widths */
+    th:nth-child(1), th:nth-child(2), th:nth-child(3), th:nth-child(4) {
+        width: auto;
+    }
+
+    .action-btn, .action-btn:hover {
+        width: auto;
+        padding: 0.4rem 0.8rem;
+        flex: 1;
+    }
+
+}

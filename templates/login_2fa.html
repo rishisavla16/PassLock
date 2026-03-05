@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}2-Step Verification - Secure PM{% endblock %}
+
+{% block content %}
+    <div class="form-container">
+        <h2>2-Step Verification</h2>
+        <p>A verification code has been sent to your email address.</p>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <div class="form-group">
+                <label for="code">Enter 6-Digit Code</label>
+                <input type="text" id="code" name="code" placeholder="000000" pattern="\d{6}" inputmode="numeric" autocomplete="one-time-code" autofocus required style="text-align: center; letter-spacing: 4px; font-size: 1.2rem;">
+            </div>
+            <button type="submit">Verify & Login</button>
+        </form>
+        <p style="margin-top: 1rem;">
+            <a href="{{ url_for('resend_2fa_code') }}" style="margin-right: 1rem;">Resend Code</a>
+            <a href="{{ url_for('login') }}">Back to Login</a>
+        </p>
+    </div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Register - Secure PM{% endblock %}
+
+{% block content %}
+    <div class="form-container">
+        <h2>Register</h2>
+        <p>Sign up with Google for easy access, or create a traditional account with a username and password.</p>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <a href="{{ url_for('login_google') }}" class="google-btn">
+            <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo">
+            Sign up with Google
+        </a>
+
+        <div class="separator">Or</div>
+
+        <form method="POST" action="{{ url_for('register') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <div class="form-group">
+                <input type="email" id="email" name="email" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <div id="password-strength"></div>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a>.</p>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        // Client-side password strength checker for user feedback
+        const passwordInput = document.getElementById('password');
+        const strengthIndicator = document.getElementById('password-strength');
+        passwordInput.addEventListener('input', () => {
+            const pass = passwordInput.value;
+            let strength = 0;
+            if (pass.length > 8) strength++;
+            if (pass.match(/[a-z]/) && pass.match(/[A-Z]/)) strength++;
+            if (pass.match(/\d/)) strength++;
+            if (pass.match(/[^a-zA-Z\d]/)) strength++;
+
+            let text = 'Weak';
+            let color = 'red';
+            if (strength === 2) { text = 'Medium'; color = 'orange'; }
+            if (strength >= 3) { text = 'Strong'; color = 'green'; }
+            
+            strengthIndicator.textContent = `Strength: ${text}`;
+            strengthIndicator.style.color = color;
+        });
+    </script>
+{% endblock %}
