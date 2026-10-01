@@ -17,12 +17,12 @@ try:
         def __init__(self, app):
             self.app = app
         def __call__(self, environ, start_response):
-            # Vercel zero-config rewrites sometimes pass the destination path instead of the original
+            if environ.get('QUERY_STRING') == 'debug_env=1':
+                start_response('200 OK', [('Content-Type', 'text/plain')])
+                return [f"{k}: {v}\n".encode() for k, v in environ.items() if isinstance(v, str) or k in ('PATH_INFO', 'SCRIPT_NAME', 'REQUEST_URI')]
+                
             path = environ.get('PATH_INFO', '')
             if path.startswith('/api/index'):
-                # Try to recover the original path from Vercel headers
-                # x-now-route-matches usually contains the original matched route
-                # fallback to just removing /api/index
                 environ['PATH_INFO'] = path.replace('/api/index', '', 1) or '/'
             return self.app(environ, start_response)
             
