@@ -32,9 +32,23 @@ app.config['GOOGLE_CLIENT_SECRET'] = os.getenv('GOOGLE_CLIENT_SECRET', '')
 
 # --- Initializations ---
 init_auth(app)
+with app.app_context():
+    db.create_all()
 csrf = CSRFProtect(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+# --- Vercel Proxy Fix ---
+class VercelProxyFix:
+    def __init__(self, app):
+        self.app = app
+    def __call__(self, environ, start_response):
+        path = environ.get('PATH_INFO', '')
+        if path.startswith('/api/index'):
+            environ['PATH_INFO'] = path.replace('/api/index', '', 1) or '/'
+        return self.app(environ, start_response)
+
+app.wsgi_app = VercelProxyFix(app.wsgi_app)
 
 @login_manager.unauthorized_handler
 def unauthorized_callback():
