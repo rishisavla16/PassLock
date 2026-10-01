@@ -14,7 +14,7 @@ from vault import get_vault, update_vault
 load_dotenv()  # Load .env file
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
-db_url = os.getenv('DATABASE_URL', 'sqlite:///users.db')
+db_url = os.getenv('DATABASE_URL') or os.getenv('POSTGRES_URL') or 'sqlite:///users.db'
 # Vercel Postgres gives postgres:// or postgresql:// — normalize both to use psycopg2
 if db_url.startswith('postgres://'):
     db_url = db_url.replace('postgres://', 'postgresql+psycopg2://', 1)
