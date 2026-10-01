@@ -15,9 +15,11 @@ load_dotenv()  # Load .env file
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
 db_url = os.getenv('DATABASE_URL', 'sqlite:///users.db')
-# Vercel Postgres uses postgres:// but SQLAlchemy needs postgresql://
+# Vercel Postgres gives postgres:// or postgresql:// — normalize both to use psycopg2
 if db_url.startswith('postgres://'):
-    db_url = db_url.replace('postgres://', 'postgresql://', 1)
+    db_url = db_url.replace('postgres://', 'postgresql+psycopg2://', 1)
+elif db_url.startswith('postgresql://'):
+    db_url = db_url.replace('postgresql://', 'postgresql+psycopg2://', 1)
 app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Set a permanent session lifetime for auto-logout
