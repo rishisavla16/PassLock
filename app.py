@@ -14,7 +14,11 @@ from vault import get_vault, update_vault
 load_dotenv()  # Load .env file
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+db_url = os.getenv('DATABASE_URL', 'sqlite:///users.db')
+# Vercel Postgres uses postgres:// but SQLAlchemy needs postgresql://
+if db_url.startswith('postgres://'):
+    db_url = db_url.replace('postgres://', 'postgresql://', 1)
+app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Set a permanent session lifetime for auto-logout
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=15)
