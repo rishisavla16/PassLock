@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="faq-section" style="margin-top: 0;">
+  <h2 class="faq-title">Frequently Asked Questions</h2>
+  
+  <div class="faq-item">
+    <button class="faq-question">What is PassLock? <span class="faq-icon">&#x2304;</span></button>
+    <div class="faq-answer">
+      <p>PassLock is a secure, encrypted password manager designed to keep your sensitive information safe.</p>
+    </div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-question">How does client-side encryption work? <span class="faq-icon">&#x2304;</span></button>
+    <div class="faq-answer">
+      <p>Your data is encrypted on your device using your Master Password before being sent to our servers. We never see your unencrypted data or your Master Password.</p>
+    </div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-question">Can you recover my account if I lose my Master Password? <span class="faq-icon">&#x2304;</span></button>
+    <div class="faq-answer">
+      <p>No. Because we never store or transmit your Master Password, we cannot recover your data if you lose it. Please keep your Master Password safe.</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

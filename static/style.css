@@ -1,50 +1,65 @@
 /* secure_password_manager/static/style.css */
 
 :root {
-    /* Light Theme Variables */
-    --bg-color: #f3f4f6;
-    --card-bg: #ffffff;
-    --text-color: #1f2937;
-    --text-muted: #9ca3af;
-    --primary-color: #4f46e5;
-    --primary-hover: #4338ca;
-    --danger-color: #ef4444;
-    --danger-hover: #dc2626;
-    --border-color: #e5e7eb;
-    --input-bg: #ffffff;
-    --header-bg: #ffffff;
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --radius: 0.5rem;
+  /* Default: Dark Theme */
+  --bg-color: #191919;
+  --card-bg: #282828;
+  --text-primary: #ffffff;
+  --text-muted: #a0a0a0;
+  --line-color: rgba(255, 255, 255, 0.1);
+  --btn-primary-bg: #ffffff;
+  --btn-primary-text: #000000;
+  --btn-secondary-bg: transparent;
+  --btn-secondary-text: #ffffff;
+  --btn-secondary-border: rgba(255, 255, 255, 0.2);
+  --input-bg: #222222;
+  --input-border: rgba(255, 255, 255, 0.2);
+
+  /* Mapping old variables */
+  --text-color: var(--text-primary);
+  --primary-color: #4f46e5;
+  --primary-hover: #4338ca;
+  --danger-color: #ef4444;
+  --danger-hover: #dc2626;
+  --border-color: var(--line-color);
+  --header-bg: var(--card-bg);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --radius: 0.5rem;
 }
 
-[data-theme="dark"] {
-    /* Dark Theme Variables */
-    --bg-color: #111827;
-    --card-bg: #1f2937;
-    --text-color: #f9fafb;
-    --text-muted: #6b7280;
-    --primary-color: #6366f1;
-    --primary-hover: #818cf8;
-    --danger-color: #f87171;
-    --danger-hover: #ef4444;
-    --border-color: #374151;
-    --input-bg: #374151;
-    --header-bg: #1f2937;
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+[data-theme="light"] {
+  --bg-color: #fcfbf8; /* Off-white cream */
+  --card-bg: #ffffff;
+  --text-primary: #2a2825; /* Slightly warmer dark text */
+  --text-muted: #6c6963;
+  --line-color: rgba(0, 0, 0, 0.08);
+  --btn-primary-bg: #1a1918;
+  --btn-primary-text: #ffffff;
+  --btn-secondary-bg: transparent;
+  --btn-secondary-text: #2a2825;
+  --btn-secondary-border: rgba(0, 0, 0, 0.15);
+  --input-bg: #ffffff;
+  --input-border: rgba(0, 0, 0, 0.15);
+
+  /* Mapping old variables */
+  --text-color: var(--text-primary);
+  --border-color: var(--line-color);
+  --header-bg: var(--card-bg);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 body {
-    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    margin: 0;
-    line-height: 1.6;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  min-height: 100vh;
+  color: var(--text-primary);
+  background-color: var(--bg-color);
+  margin: 0;
+  line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 header {
@@ -98,40 +113,45 @@ header h1 {
 }
 
 .button-nav {
-    color: #fff;
-    background-color: var(--primary-color);
+    color: var(--text-muted);
+    background-color: transparent;
     padding: 0.5rem 1rem;
     border-radius: var(--radius);
     text-decoration: none;
-    transition: background-color 0.2s, transform 0.1s;
+    border: 1px solid var(--line-color);
+    transition: background-color 0.2s, color 0.2s;
     font-size: 0.9rem;
 }
 
 .button-nav:hover {
-    background-color: var(--primary-hover);
+    background-color: rgba(128,128,128,0.1);
+    color: var(--text-primary);
     text-decoration: none;
-}
-
-.button-logout[style*="background-color: var(--primary-color)"] {
-    background-color: var(--primary-color);
 }
 
 
 main {
-    max-width: 900px;
-    width: 95%;
-    margin: 2rem auto;
-    padding: 2rem 4rem;
-    background-color: var(--card-bg);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-md);
-    border: 1px solid var(--border-color);
+    /* Layout only — visual card is handled by .form-container / .app-shell children */
+    box-sizing: border-box;
 }
 
 .form-container {
     max-width: 560px;
     width: 92%;
     margin: 2rem auto;
+    padding: 2rem;
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color);
+}
+
+/* Wide card for the vault page — fills the full 1000px shell */
+.vault-card {
+    width: 100%;
+    margin: 30px auto;
+    max-width: 1000px;
+    box-sizing: border-box;
     padding: 2rem;
     background-color: var(--card-bg);
     border-radius: var(--radius);
@@ -184,10 +204,10 @@ input:focus {
 }
 
 button {
-    background-color: var(--primary-color);
-    color: white;
+    background-color: rgba(128,128,128,0.15);
+    color: var(--text-primary);
     padding: 0.75rem 1.5rem;
-    border: none;
+    border: 1px solid var(--line-color);
     border-radius: var(--radius);
     cursor: pointer;
     font-size: 1rem;
@@ -196,8 +216,19 @@ button {
 }
 
 button:hover {
-    background-color: var(--primary-hover);
+    background-color: rgba(128,128,128,0.25);
     transform: none;
+}
+
+/* Only the Unlock / Set Master Password button stays blue */
+#unlock-button {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+}
+
+#unlock-button:hover {
+    background-color: var(--primary-hover);
 }
 
 button:active {
@@ -235,12 +266,7 @@ button:disabled {
     margin-bottom: 1.5rem;
 }
 
-#lock-vault-button {
-    background-color: #f59e0b; /* Amber */
-}
-#lock-vault-button:hover {
-    background-color: #d97706;
-}
+/* Lock vault inherits the neutral button style */
 
 #add-entry-form {
     background-color: var(--bg-color);
@@ -354,7 +380,7 @@ tr:last-child td {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem 0rem;
+    padding: 1rem 0rem !important;
 }
 
 .icon-btn:hover {
@@ -812,3 +838,82 @@ footer {
     }
 
 }
+
+/* Layout Wrapper for Sticky Footer */
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Navbar */
+.navbar {
+  border-bottom: 1px solid var(--line-color);
+  background-color: var(--card-bg);
+}
+
+.navbar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: min(1000px, 92vw);
+  margin: 0 auto;
+  padding: 1.2rem 0;
+}
+
+.nav-brand { font-weight: 700; font-size: 1.2rem; }
+.nav-links { display: flex; align-items: center; gap: 1.5rem; }
+.nav-link { color: var(--text-primary); text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: opacity 0.2s; }
+.nav-link:hover { opacity: 0.7; }
+
+/* Theme Toggle Button (Floating Emoji, Rotates on Hover) */
+.theme-toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+  transform: rotate(30deg);
+  background: none !important;
+}
+
+/* Footer */
+.site-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--line-color);
+  padding: 2rem 0;
+  background-color: var(--card-bg);
+}
+
+.footer-inner {
+  width: min(1000px, 92vw);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  text-align: center;
+}
+
+.footer-links { display: flex; gap: 1.5rem; }
+.footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text-primary); }
+.footer-credits { margin: 0; font-size: 0.85rem; color: var(--text-muted); }
+
+/* FAQ Section */
+.faq-section { margin-top: 3rem; padding: 1.5rem; }
+.faq-title { margin-bottom: 1.5rem; font-size: 1.5rem; }
+.faq-item { margin-bottom: 0.5rem; border-radius: 6px; overflow: hidden; background-color: var(--card-bg); border: 1px solid var(--line-color); }
+.faq-question { width: 100%; text-align: left; padding: 1rem 1.2rem; background-color: transparent; color: var(--text-primary); font-size: 1rem; font-weight: 500; display: flex; justify-content: space-between; align-items: center; border: none; border-radius: 0; cursor: pointer; }
+.faq-question:hover { background-color: rgba(128, 128, 128, 0.1); }
+.faq-icon { font-size: 1.2rem; transition: transform 0.3s ease; }
+.faq-item.active .faq-icon { transform: rotate(180deg); }
+.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+.faq-answer p { padding: 0 1.2rem 1.2rem; color: var(--text-muted); line-height: 1.6; }

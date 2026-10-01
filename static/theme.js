@@ -1,26 +1,43 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const toggleBtn = document.getElementById('theme-toggle');
-    
-    // Check local storage or system preference
-    const savedTheme = localStorage.getItem('theme');
-    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        if(toggleBtn) toggleBtn.textContent = '☀️';
-    } else {
-        document.documentElement.setAttribute('data-theme', 'light');
-        if(toggleBtn) toggleBtn.textContent = '🌙';
-    }
+const themeToggleBtn = document.getElementById("themeToggleBtn");
 
-    if (toggleBtn) {
-        toggleBtn.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            toggleBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
-        });
+// ─── Theme Management ───
+function updateThemeIcon(theme) {
+  if (themeToggleBtn) {
+    // Show Sun to switch to light, Moon to switch to dark.
+    themeToggleBtn.textContent = theme === "dark" ? "☀" : "☾";
+  }
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem("passlock-theme") || "dark";
+  document.documentElement.setAttribute("data-theme", savedTheme);
+  updateThemeIcon(savedTheme);
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute("data-theme");
+  const newTheme = currentTheme === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", newTheme);
+  localStorage.setItem("passlock-theme", newTheme);
+  updateThemeIcon(newTheme);
+}
+
+if (themeToggleBtn) {
+  themeToggleBtn.addEventListener("click", toggleTheme);
+}
+initTheme();
+
+// ─── FAQ Accordion ───
+const faqQuestions = document.querySelectorAll('.faq-question');
+faqQuestions.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const faqItem = btn.parentElement;
+    const answer = btn.nextElementSibling;
+    faqItem.classList.toggle('active');
+    if (faqItem.classList.contains('active')) {
+      answer.style.maxHeight = answer.scrollHeight + "px";
+    } else {
+      answer.style.maxHeight = 0;
     }
+  });
 });
