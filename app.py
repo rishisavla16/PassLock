@@ -13,7 +13,7 @@ from vault import get_vault, update_vault
 # --- App Configuration ---
 load_dotenv()  # Load .env file
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', os.urandom(24))
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Set a permanent session lifetime for auto-logout
