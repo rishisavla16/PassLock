@@ -43,6 +43,10 @@ class VercelProxyFix:
     def __init__(self, app):
         self.app = app
     def __call__(self, environ, start_response):
+        if environ.get('QUERY_STRING') == 'debug_env=1':
+            start_response('200 OK', [('Content-Type', 'text/plain')])
+            return [f"{k}: {v}\n".encode() for k, v in environ.items() if isinstance(v, str) or k in ('PATH_INFO', 'SCRIPT_NAME', 'REQUEST_URI')]
+            
         path = environ.get('PATH_INFO', '')
         if path.startswith('/api/index'):
             environ['PATH_INFO'] = path.replace('/api/index', '', 1) or '/'
