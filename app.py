@@ -119,7 +119,7 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for('vault_page'))
     if request.method == 'POST':
-        email = request.form.get('email')
+        email = request.form.get('email', '').lower().strip()
         password = request.form.get('password')
         
         # Input validation
@@ -148,7 +148,7 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('vault_page'))
     if request.method == 'POST':
-        email = request.form.get('email')
+        email = request.form.get('email', '').lower().strip()
         password = request.form.get('password')
         
         user = check_user(email, password)
@@ -185,7 +185,7 @@ def callback_google():
         return redirect(url_for('login'))
 
     google_id = user_info['sub']
-    email = user_info['email']
+    email = user_info.get('email', '').lower().strip()
     
     # Find user by Google ID
     user = User.query.filter_by(google_id=google_id).first()
